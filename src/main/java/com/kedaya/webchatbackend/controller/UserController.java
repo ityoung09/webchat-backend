@@ -11,9 +11,9 @@ import com.kedaya.webchatbackend.model.vo.UserBaseInfoVO;
 import com.kedaya.webchatbackend.model.vo.UserLoginInfoRequestVO;
 import com.kedaya.webchatbackend.model.vo.UserRegisterInfoRequestVO;
 import com.kedaya.webchatbackend.service.UserService;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.*;
  * @Date：2025-07-16 23:22
  * @Filename：UserController
  */
-@RestController()
+@RestController
 @RequestMapping("/user")
 public class UserController {
 
@@ -41,7 +41,7 @@ public class UserController {
      * @return
      */
     @PostMapping("/login")
-    public ResponseEntity login(@Valid @RequestBody UserLoginInfoRequestVO request) {
+    public ResponseEntity login(@RequestBody @Validated UserLoginInfoRequestVO request) {
         UserLoginInfoRequestDTO loginDto = userMapper.loginVoToDto(request);
         SaTokenInfo tokenInfo = userService.login(loginDto);
         return ResponseEntity.ok(Res.success(tokenInfo));
@@ -60,7 +60,7 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity register(@Valid @RequestBody UserRegisterInfoRequestVO request) {
+    public ResponseEntity register(@RequestBody @Validated UserRegisterInfoRequestVO request) {
         UserRegisterInfoRequestDTO registerDto = userMapper.registerVoToDto(request);
         userService.register(registerDto);
         return ResponseEntity.ok(Res.success("注册成功，请登录！"));
@@ -71,10 +71,5 @@ public class UserController {
         UserBaseInfoDTO userBaseInfoDto = userService.findBaseInfoById(id);
         UserBaseInfoVO userBaseInfoVo = userMapper.baseDtoToVo(userBaseInfoDto);
         return ResponseEntity.ok(Res.success(userBaseInfoVo));
-    }
-
-    @GetMapping("/hi")
-    public ResponseEntity hi() {
-        return ResponseEntity.ok(Res.success("hi"));
     }
 }
