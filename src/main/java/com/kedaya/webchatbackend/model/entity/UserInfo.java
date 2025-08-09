@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 /**
  * @Author：CHENWEI
  * @Package：com.kedaya.webchatbackend.entity
@@ -19,7 +21,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 @TableName(value = "web_chat_user")
-public class UserInfo extends BaseEntity{
+public class UserInfo extends BaseEntity implements Serializable {
 
     /**
      * 用户名

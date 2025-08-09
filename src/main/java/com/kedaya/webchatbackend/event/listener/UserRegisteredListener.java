@@ -2,7 +2,6 @@ package com.kedaya.webchatbackend.event.listener;
 
 import com.kedaya.webchatbackend.event.domain.UserRegisteredEvent;
 import org.springframework.context.event.EventListener;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 /**

@@ -1,7 +1,6 @@
 package com.kedaya.webchatbackend.event.domain;
 
 import com.kedaya.webchatbackend.common.event.BaseEvent;
-import lombok.Data;
 import lombok.Getter;
 
 import java.time.LocalDateTime;

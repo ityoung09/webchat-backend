@@ -2,7 +2,6 @@ package com.kedaya.webchatbackend.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.kedaya.webchatbackend.common.event.EventPublisher;
-import com.kedaya.webchatbackend.event.domain.UserRegisteredEvent;
 import com.kedaya.webchatbackend.model.entity.FriendInfo;
 import com.kedaya.webchatbackend.repository.FriendRepository;
 import com.kedaya.webchatbackend.service.FriendService;

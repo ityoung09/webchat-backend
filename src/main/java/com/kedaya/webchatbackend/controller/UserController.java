@@ -11,21 +11,22 @@ import com.kedaya.webchatbackend.model.vo.UserBaseInfoVO;
 import com.kedaya.webchatbackend.model.vo.UserLoginInfoRequestVO;
 import com.kedaya.webchatbackend.model.vo.UserRegisterInfoRequestVO;
 import com.kedaya.webchatbackend.service.UserService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 /**
+ * 用户管理控制器
+ * 提供用户注册、登录、登出、信息查询等功能
+ *
  * @Author：CHENWEI
- * @Package：com.kedaya.webchatbackend.controller
- * @Project：webchat-backend
- * @name：UserController
  * @Date：2025-07-16 23:22
- * @Filename：UserController
  */
 @RestController
 @RequestMapping("/user")
+@Tag(name = "用户管理", description = "用户相关接口，包括注册、登录、登出、信息查询等功能")
 public class UserController {
 
     @Autowired
@@ -37,8 +38,8 @@ public class UserController {
     /**
      * 用户登录
      *
-     * @param request
-     * @return
+     * @param request 登录请求信息
+     * @return 登录成功返回Token信息
      */
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody @Validated UserLoginInfoRequestVO request) {
@@ -50,8 +51,7 @@ public class UserController {
     /**
      * 用户登出
      *
-     * @param
-     * @return
+     * @return 登出结果
      */
     @PostMapping("/logout")
     public ResponseEntity logout() {

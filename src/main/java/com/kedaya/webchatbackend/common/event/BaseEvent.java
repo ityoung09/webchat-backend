@@ -1,6 +1,5 @@
 package com.kedaya.webchatbackend.common.event;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.context.ApplicationEvent;
 
 import java.time.LocalDateTime;

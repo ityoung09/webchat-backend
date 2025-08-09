@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Builder
 @TableName(value = "web_chat_friend")
-public class FriendInfo implements Serializable {
+public class FriendInfo extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

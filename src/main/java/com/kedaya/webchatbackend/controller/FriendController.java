@@ -3,6 +3,7 @@ package com.kedaya.webchatbackend.controller;
 import com.kedaya.webchatbackend.common.Res;
 import com.kedaya.webchatbackend.model.vo.FriendApplyRequestVO;
 import com.kedaya.webchatbackend.utils.JsonUtils;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @RestController
 @RequestMapping("friend")
+@Tag(name = "好友管理", description = "好友相关接口，包括添加,查询, 删除等功能")
 public class FriendController {
 
     @PostMapping("/apply")

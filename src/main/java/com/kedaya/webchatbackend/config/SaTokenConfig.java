@@ -26,6 +26,13 @@ public class SaTokenConfig implements WebMvcConfigurer {
                     SaRouter.match(SaHttpMethod.OPTIONS).free(r -> System.out.println("预请求直接放行")).stop();
                     SaRouter.match("/**")
                             .notMatch("/user/login", "/user/register")
+                            .notMatch("/doc.html",              // Knife4j UI
+                                    "/webjars/**",
+                                    "/v3/api-docs/**",
+                                    "/swagger-resources/**",
+                                    "/swagger-ui.html",
+                                    "/swagger-ui/**",
+                                    "/favicon.ico")
                             .check(r -> StpUtil.checkLogin());
                 }))
                 .addPathPatterns("/**");

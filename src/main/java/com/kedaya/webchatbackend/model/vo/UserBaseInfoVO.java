@@ -6,12 +6,10 @@ import lombok.Data;
 import java.time.LocalDateTime;
 
 /**
+ * 用户基本信息视图对象
+ *
  * @Author：CHENWEI
- * @Package：com.kedaya.webchatbackend.vo
- * @Project：webchat-backend
- * @name：UserBaseInfoVo
  * @Date：2025-07-21 23:23
- * @Filename：UserBaseInfoVo
  */
 @Data
 public class UserBaseInfoVO {
