@@ -11,6 +11,8 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
 
+import java.util.List;
+
 @Mapper(componentModel = "spring")
 public interface UserMapper {
 
@@ -24,7 +26,8 @@ public interface UserMapper {
     })
     UserBaseInfoDTO entityToBaseDto(UserInfo userInfo);
 
-
     UserBaseInfoVO baseDtoToVo(UserBaseInfoDTO userBaseInfoDto);
+
+    List<UserBaseInfoVO> baseDtoToVo(List<UserBaseInfoDTO> userBaseInfoDto);
 
 }

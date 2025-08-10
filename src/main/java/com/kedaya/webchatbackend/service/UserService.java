@@ -14,4 +14,6 @@ public interface UserService extends IService<UserInfo> {
     void register(UserRegisterInfoRequestDTO registerDto);
 
     UserBaseInfoDTO findBaseInfoById(Long id);
+
+    UserBaseInfoDTO findBaseInfoByMobile(String mobile);
 }

@@ -19,6 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
+import org.springframework.util.StopWatch;
 
 
 /**
@@ -41,19 +42,30 @@ public class UserServiceImpl extends ServiceImpl<UserRepository, UserInfo> imple
 
     @Override
     public SaTokenInfo login(UserLoginInfoRequestDTO loginDto) {
+        StopWatch sw = new StopWatch("登录性能测试");
+
         String mobile = loginDto.getMobile();
         String password = loginDto.getPassword();
         LoginDeviceType loginDeviceType = loginDto.getLoginDeviceType();
         // 校验账号密码是否正确
-        UserInfo userInfo = selectInfoByMobile(mobile);
+        sw.start("db");
+        UserInfo userInfo = findInfoByMobile(mobile);
         if (ObjectUtils.isEmpty(userInfo)) {
             throw new BusinessException("当前账号不存在！");
         }
         if (!PasswordUtils.verifyPassword(password, userInfo.getPassword())) {
             throw new BusinessException("请检查输入的密码是否错误！");
         }
+        sw.stop();
+        sw.start("redis1");
         StpUtil.login(userInfo.getId(), loginDeviceType.getCode());
-        return StpUtil.getTokenInfo();
+        sw.stop();
+        sw.start("redis2");
+        SaTokenInfo tokenInfo = StpUtil.getTokenInfo();
+        sw.stop();
+        System.out.println(sw.prettyPrint()); // 美观输出
+        System.out.println("总耗时: " + sw.getTotalTimeMillis() + " ms");
+        return tokenInfo;
     }
 
     @Override
@@ -61,7 +73,7 @@ public class UserServiceImpl extends ServiceImpl<UserRepository, UserInfo> imple
         String mobile = request.getMobile();
         String password = request.getPassword();
         String userName = request.getUserName();
-        UserInfo userInfo = selectInfoByMobile(mobile);
+        UserInfo userInfo = findInfoByMobile(mobile);
         if (userInfo != null) {
             throw new BusinessException("当前手机号码已注册！");
         }
@@ -77,7 +89,14 @@ public class UserServiceImpl extends ServiceImpl<UserRepository, UserInfo> imple
         return userBaseInfoDTO;
     }
 
-    private UserInfo selectInfoByMobile(String mobile) {
+    @Override
+    public UserBaseInfoDTO findBaseInfoByMobile(String mobile) {
+        UserInfo userInfo = findInfoByMobile(mobile);
+        UserBaseInfoDTO userBaseInfoDTO = userMapper.entityToBaseDto(userInfo);
+        return userBaseInfoDTO;
+    }
+
+    private UserInfo findInfoByMobile(String mobile) {
         QueryWrapper<UserInfo> wrapper = new QueryWrapper();
         wrapper.eq("mobile", mobile);
         return getOne(wrapper);

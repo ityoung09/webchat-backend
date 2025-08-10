@@ -34,6 +34,11 @@ public class FriendInfo extends BaseEntity implements Serializable {
     private Integer status;
 
     /**
+     * 备注
+     */
+    private String remark;
+
+    /**
      * 申请时间
      */
     private LocalDateTime applyDate;

@@ -3,6 +3,7 @@ package com.kedaya.webchatbackend.model.vo;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.ToString;
+import org.hibernate.validator.constraints.Length;
 
 import java.io.Serializable;
 
@@ -23,4 +24,10 @@ public class FriendApplyRequestVO implements Serializable {
      */
     @NotNull(message = "好友ID不能为空")
     private Long friendId;
+
+    /**
+     * 申请加好友的备注
+     */
+    @Length(max = 100)
+    private String remark;
 }

@@ -11,6 +11,7 @@ import com.kedaya.webchatbackend.model.vo.UserBaseInfoVO;
 import com.kedaya.webchatbackend.model.vo.UserLoginInfoRequestVO;
 import com.kedaya.webchatbackend.model.vo.UserRegisterInfoRequestVO;
 import com.kedaya.webchatbackend.service.UserService;
+import com.kedaya.webchatbackend.utils.UserUtils;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -66,10 +67,20 @@ public class UserController {
         return ResponseEntity.ok(Res.success("注册成功，请登录！"));
     }
 
-    @GetMapping("/info/{id}")
-    public ResponseEntity getUserInfo(@PathVariable("id") Long id) {
-        UserBaseInfoDTO userBaseInfoDto = userService.findBaseInfoById(id);
+    @GetMapping("/info")
+    public ResponseEntity getUserInfo() {
+        Long loginId = UserUtils.getCurrentUserId();
+        UserBaseInfoDTO userBaseInfoDto = userService.findBaseInfoById(loginId);
         UserBaseInfoVO userBaseInfoVo = userMapper.baseDtoToVo(userBaseInfoDto);
         return ResponseEntity.ok(Res.success(userBaseInfoVo));
     }
+
+    @GetMapping("/info/{mobile}")
+    public ResponseEntity getUserInfoByMobile(@PathVariable("mobile") String mobile) {
+        UserBaseInfoDTO userBaseInfoDto = userService.findBaseInfoByMobile(mobile);
+        UserBaseInfoVO userBaseInfoVo = userMapper.baseDtoToVo(userBaseInfoDto);
+        return ResponseEntity.ok(Res.success(userBaseInfoVo));
+    }
+
+
 }
